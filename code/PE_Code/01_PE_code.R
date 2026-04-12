@@ -1,4 +1,4 @@
-# library("readxl", "ggplot2", "rstatix", "dplyr")
+# library("readxl", "ggplot2", "rstatix", "dplyr", "broom")
 
 here::i_am(
   "code/PE_code/01_PE_code.R"
@@ -8,15 +8,22 @@ data <- read_excel(here::here("data/nba_data.xlsx"))
 
 table(data$Team, useNA = "ifany")
 
-PFbT_anova <- aov(PF ~ Team,
-                  data = data)
-summary(PFbT_anova)
+PFbT_anova <- oneway.test(PF ~ Team, 
+                          data = data, 
+                          var.equal = FALSE)
 
-oneway.test(PF ~ Team, 
-            data = data, 
-            var.equal = FALSE)
+PFbT_anova_tbl <- data.frame(
+  Test = "Welch One-Way ANOVA",
+  F_statistic = round(PFbT_anova$statistic, 2),
+  df1 = round(PFbT_anova$parameter[1], 2),
+  df2 = round(PFbT_anova$parameter[2], 2),
+  p_value = signif(PFbT_anova$p.value, 3)
+)
 
-games_howell_test(data, PF ~ Team)
+
+saveRDS(PFbT_anova_tbl, 
+        here::here("output/PE_output/PFbT_anova_tbl.rds"))
+
 
 PFbT_table <- data %>%
   group_by(Team) %>%
@@ -26,16 +33,18 @@ PFbT_table <- data %>%
     n = n()
   )
 
-PFbT_table
+saveRDS(PFbT_table,
+        here::here("output/PE_output/PFbT_sum_tbl.rds"))
 
 PFbT_boxplot <- ggplot(data, 
                aes(x = Team, 
                    y = PF)) +
   geom_boxplot(outlier.shape = NA) +
-  geom_jitter(width = 0.2, alpha = 0.4) +
+  coord_cartesian(ylim = c(0, 10)) +
   theme(axis.text = element_text(angle = 45, hjust = 1))
 
-PFbT_boxplot
+saveRDS(PFbT_boxplot,
+        here::here("output/PE_output/PFbT_boxplot.rds"))
 
 PFbT_bar <- ggplot(PFbT_table, 
                    aes(x = reorder(Team, mean_PF),
@@ -43,4 +52,5 @@ PFbT_bar <- ggplot(PFbT_table,
   geom_col() +
   coord_flip()
 
-PFbT_bar
+saveRDS(PFbT_bar,
+        here::here("output/PE_output/PFbT_bar.rds"))
