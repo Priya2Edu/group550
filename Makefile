@@ -2,6 +2,19 @@
 report.html: report.Rmd code/render_report.R
 	Rscript code/render_report.R
 	
+# SL Outputs
+.PHONY: all_sl
+all_sl: output/sl_output/boxplot.rds \
+        output/sl_output/table_one.rds \
+        output/sl_output/tukey_table.rds
+
+output/sl_output/table_one.rds \
+output/sl_output/tukey_table.rds: code/sl_code/01_sl_table.R
+	Rscript code/sl_code/01_sl_table.R
+
+output/sl_output/boxplot.rds: code/sl_code/02_sl_plot.R
+	Rscript code/sl_code/02_sl_plot.R
+
 # PE Outputs
 .PHONY: all_pe
 all_pe: output/PE_output/PFbT_anova_tbl.rds \
