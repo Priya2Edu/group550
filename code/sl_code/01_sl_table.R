@@ -46,7 +46,7 @@ saveRDS(
 
 #running ANOVA test
 anova_model <- aov(formula = data$`3PA` ~ data$Pos)
-summary(anova)
+summary(anova_model)
 
 #since the p-value is less than 0.05, the ANOVA test is statistically significant
 tukey_results <- TukeyHSD(anova_model)
