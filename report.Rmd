@@ -3,10 +3,20 @@ title: "Analysis of NBA Player Statistics"
 author: "Midterm Group 2"
 date: "`r format(Sys.Date(), '%m-%d-%y')`"
 output: html_document
+params: 
+  production: TRUE
+  echo: FALSE
+  section: "all"
 ---
-
-```{r, set-chunk-opts, echo = FALSE, eval = params$production}
+```{r, set-chunk-opts, echo = FALSE, eval = params$production, message=FALSE, warning=FALSE}
 library(knitr)
+library(dplyr)
+library(ggplot2)
+library(readxl)
+library(gt)
+library(here)
+library(kableExtra)
+
 opts_chunk$set(
   echo = FALSE, warning = FALSE, message = FALSE
 )
@@ -19,18 +29,141 @@ here::i_am(
 ```
 
 ```{r, read code}
-library(dplyr) 
-library(ggplot2)
-library(readxl)
 data <- read_excel(
   here::here("data/nba_data.xlsx")
 )
+section <- params$section
 ```
 
-#Personal Fouls Per 36 Minutes by Team
+```{r, results = 'asis'}
+if (section %in% c("all", "pf")) {
+  
+  cat("## Personal Fouls Per 36 Minutes by Team\n\n")
 
-#Position and 3-Point Field Goal Attempts
+anova_p <- readRDS(
+  here::here("output/PE_output/PFbT_anova_tbl.rds")
+)
+sum_table_p <- readRDS(here::here("output/PE_output/PFbT_sum_tbl.rds")
+)
 
-#All Star Awards by Position
+boxplot_p <- readRDS(
+  here::here("output/PE_output/PFbT_boxplot.rds")
+)
 
-#Games Started and 3-Pointers & Free Throws
+bar_p <- readRDS(
+  here::here("output/PE_output/PFbT_bar.rds")
+)
+
+print(
+    knitr::kable(
+    as.data.frame(anova_p),
+    digits = 3,
+    caption = "ANOVA: Personal Fouls by Team"
+  )
+)
+
+print(
+  knitr::kable(
+    sum_table_p,
+    digits = 2,
+    caption = "Personal Fouls by Team"
+)
+)
+
+print(boxplot_p + labs(title = "Personal Fouls per 36 Minutes by Team"))
+
+print(bar_p + labs(title= "Average Personal Fouls Per 36 Minutes by Team"))
+}
+```
+
+```{r, results='asis'}
+if (section %in% c("all", "fg")) {
+  
+   cat("## Position and 3-Point Field Goal Attempts\n\n")
+  
+table_s <- readRDS(
+  here::here("output/sl_output/table_one.rds")
+)
+
+tukey_s <- readRDS(
+  here::here("output/sl_output/tukey_table.rds")
+)
+
+boxplot_s <- readRDS(
+  here::here("output/sl_output/boxplot.rds")
+)
+
+print(table_s)
+
+print(tukey_s)
+
+print(boxplot_s)
+}
+```
+
+```{r, results='asis'}
+if (section %in% c("all", "asa")) {
+  
+  cat("## All Star Awards by Position\n\n")
+  
+summary_tablee <- read.csv(
+  here::here("output/em_output/table1_summary.csv")
+)
+
+chi_tablee <- read.csv(
+  here::here("output/em_output/chi_square_table.csv")
+)
+
+chi_resultse <- read.csv(
+  here::here("output/em_output/chi_square_results.csv")
+)
+
+bar_e <- knitr::include_graphics(
+  here::here("output/em_output/Position_AS_barchart.png")
+)
+
+print(knitr::kable(summary_tablee, caption = "Summary Table"))
+
+print(knitr::kable(chi_tablee, caption = "Chi-Squared Table"))
+
+print(knitr::kable(chi_resultse, caption = "Chi-Squared Results"))
+
+bar_e
+}
+```
+
+```{r, results='asis'}
+if (section %in% c("all", "games")) {
+  
+   cat("## Games Started and 3-Pointers & Free Throws\n\n")
+  
+summary1 <- readRDS(
+  here::here("output/output_mm/summary_3p_mm.rds")
+  )
+
+scatterplot1 <- readRDS(
+  here::here("output/output_mm/scatterplot_3pbgs_mm.rds")
+  )
+
+summary2 <- readRDS(
+  here::here("output/output_mm/summary_ft_mm.rds")
+  )
+
+scatterplot2 <- readRDS(
+  here::here("output/output_mm/scatterplot_ftbgs_mm.rds")
+)
+
+print(knitr::kable(
+  summary1$coefficients, 
+  caption = "3PT Model Results")
+  )
+print(scatterplot1)
+
+print(knitr::kable(
+  summary2$coefficients, 
+  caption = "Free Throw Model Results")
+  )
+
+print(scatterplot2)
+}
+```

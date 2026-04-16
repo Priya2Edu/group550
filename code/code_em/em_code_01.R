@@ -63,9 +63,6 @@ fig1 <- ggplot(award_by_position, aes(x = Pos, y = num_players_with_award)) +
   ) +
   theme_minimal()
 
-# Show plot in RStudio
-print(fig1)
-
 # Save plot
 ggsave(
   filename = here("output", "em_output", "Position_AS_barchart.png"),

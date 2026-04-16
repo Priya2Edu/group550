@@ -1,8 +1,9 @@
 .PHONY: all
-all: report.html mm_all all_pe
+all: report.html
 
 # Compiling final html report - need to add other code!
-report.html: report.Rmd code/render_report.R
+report.html: report.Rmd code/render_report.R \
+all_pe all_sl all_em mm_all
 	Rscript code/render_report.R
 
 # PE Outputs
@@ -42,17 +43,16 @@ all_em: output/em_output/table1_summary.csv \
 output/em_output/table1_summary.csv \
 output/em_output/chi_square_results.csv \
 output/em_output/chi_square_table.csv \
-output/em_output/Position_AS_barchart.png: code/em_code/em_code_01.R
-	Rscript code/em_code/em_code_01.R
+output/em_output/Position_AS_barchart.png: code/code_em/em_code_01.R
+	Rscript code/code_em/em_code_01.R
 
 #MM Outputs
-
 .PHONY: mm_all
 
 mm_all: output/output_mm/summary_3p_mm.rds \
              output/output_mm/summary_ft_mm.rds \
-             output/output_mm/scatterplot_3p_mm.rds \
-             output/output_mm/scatterplot_ft_mm.rds
+             output/output_mm/scatterplot_3pbgs_mm.rds \
+             output/output_mm/scatterplot_ftbgs_mm.rds
 
 output/output_mm/summary_3p_mm.rds \
 output/output_mm/summary_ft_mm.rds \
@@ -60,12 +60,12 @@ output/output_mm/scatterplot_3p_mm.rds \
 output/output_mm/scatterplot_ft_mm.rds: code/code_mm/code_mm.R
 	Rscript code/code_mm/code_mm.R
 	
-# Clean Command - needs to be edited to account for other folders
+# Clean Command
 .PHONY: clean
 clean:
 	rm -f output/PE_output/*.rds && rm -f report.html \
 	&& rm -f output/sl_output/*.rds \
-	rm -f output/em_output/*csv && rm -f output/em_output/*.png \
+	&& rm -f output/em_output/*csv && rm -f output/em_output/*.png \
 	&& rm -f output/output_mm/*rds
 
 # Renv install command - delete #s once ready
