@@ -6,7 +6,7 @@ This group project is an analysis of NBA player statistics.
 
 1. Change your working directory to match the current repository ("group550")
 
-2. Run "make install" in the terminal to ensure all required packages are installed. 
+2. Run "make install" to ensure repository packages are properly installed
 
 3. Ensure that your organizational structure matches the below. Run "make clean"
 in the terminal to ensure everything is set up correctly. 
@@ -24,7 +24,7 @@ run all our code and produce the report.html file showing your category of inter
 `code` folder houses all code required to create outputs shown in our report.
 
   - `PE_code/` holds code for our analysis of Personal Fouls
-  -  `sl_code/` holds code for our analysis of Position and 3-Point Field Goal Attempts
+  - `sl_code/` holds code for our analysis of Position and 3-Point Field Goal Attempts
   - `code_em/` holds code for our analysis of All Star Awards by Position
   - `code_mm/` hold code for our analysis of Games Started and 3-Pointers & Free Throws
 
