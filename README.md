@@ -2,9 +2,13 @@
 
 This group project is an analysis of NBA player statistics. 
 
+Note: if you are using a different data set, please ensure that the format is an 
+excel spreadsheet, that it is titled "nba_data.xlsx", and that it is located inside
+the data folder. 
+
 ## How to Build our Report
 
-1. Change your working directory to match the current repository ("group550")
+1. Change your working directory to match the current repository ("group550") 
 
 2. Run "make install" to ensure repository packages are properly installed
 
@@ -47,7 +51,7 @@ formatted report
 
 This `README.md` document with instructions
 
-## Categories for the Report
+## Categories for the Report (Customization Element)
 This goes in the yamal header of the report.Rmd
 
 - `all` All categories of interest shown
