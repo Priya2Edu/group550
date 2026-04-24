@@ -56,10 +56,9 @@ tidy_tukey <- tidy(tukey_results)
 print(tidy_tukey)
 
 tukey_table <- tidy_tukey %>% 
-  select (term, contrast, estimate, conf.low, conf.high, adj.p.value) %>% 
+  select (contrast, estimate, conf.low, conf.high, adj.p.value) %>% 
   mutate(significance = ifelse(adj.p.value <0.05, "*","")) %>% 
   rename(
-    "Term" = term,
     "Contrast" = contrast,
     "Estimate" = estimate,
     "Lower Bound of CI" = conf.low,
