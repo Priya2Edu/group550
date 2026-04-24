@@ -1,7 +1,7 @@
 .PHONY: all
 all: report.html
 
-# Compiling final html report - need to add other code!
+# Compiling final html report
 report.html: report.Rmd code/render_report.R \
 all_pe all_sl all_em all_mm
 	Rscript code/render_report.R
