@@ -62,6 +62,9 @@ print(
   )
 )
 
+cat("The table above displays the results of a Welch’s One-Way ANOVA test, identifying if there are significant differences in the average number of personal fouls by NBA team.\n\n")
+
+
 print(
   knitr::kable(
     sum_table_p,
@@ -69,10 +72,13 @@ print(
     caption = "Personal Fouls by Team"
 )
 )
+cat("The table above displays the average number of personal fouls by NBA team, as well as the standard deviation and count.\n\n")
 
 print(boxplot_p + labs(title = "Personal Fouls per 36 Minutes by Team"))
+cat("\n\n\nThe figure above visualizes a 5-number summary of Personal Fouls per 36 minutes by NBA team.\n\n")
 
 print(bar_p + labs(title= "Average Personal Fouls Per 36 Minutes by Team"))
+cat("\n\n\nThe figure above visualizes the average number of personal fouls per 36 minutes by NBA team.\n\n")
 }
 ```
 
@@ -94,11 +100,14 @@ boxplot_s <- readRDS(
 )
 
 print(table_s)
+cat("The table above is a summary table of the 5 positions and the 3-point field goal attempts per position.\n\n")
 
 print(knitr::kable(as.data.frame(tukey_s), digits = 3))
-#figure out better way to format this table for the final?
+cat("The table above produces the results of the One-Way Anova Test. In the Significance column, the ones that have an asterisk signifies that there is a significant difference within that contrast group.\n\n")
 
 print(boxplot_s)
+
+cat("\n\n\nThe bar plot above displays a graphical representation of the Tukey Table and our Anova Test results. It makes it easy to visualize which positions in regards to 3-point field goal attempts are different.\n\n")
 }
 ```
 
@@ -124,12 +133,17 @@ bar_e <- knitr::include_graphics(
 )
 
 print(knitr::kable(summary_tablee, caption = "Summary Table"))
+cat("The table above shows the distribution of players with All-Star awards across positions.\n\n")
 
 print(knitr::kable(chi_tablee, caption = "Chi-Squared Table"))
+cat("The chi-square table above displays the test results of the chi-square test. It shows whether All-Star award status is associated with player position.\n\n")
 
 print(knitr::kable(chi_resultse, caption = "Chi-Squared Results"))
+cat("These results above show no statistically significant association between player position and All-Star status.\n\n")
 
-bar_e
+cat("![](", here::here("output/em_output/Position_AS_barchart.png"), ")\n\n", sep = "")
+
+cat("The bar chart above visualizes the number of players with All-Star awards across the different positions.\n\n")
 }
 ```
 
@@ -158,13 +172,18 @@ print(knitr::kable(
   summary1$coefficients, 
   caption = "3PT Model Results")
   )
+cat("Contains the statistical summary of a linear regression model on whether the number of games started is a signifier for the total number of 3-pointers. \n\n")
+
 print(scatterplot1)
+cat("\n\n\nVisualizes the relationship between games started (GS) and 3-pointers made. \n\n")
 
 print(knitr::kable(
   summary2$coefficients, 
   caption = "Free Throw Model Results")
   )
+cat("\n\n\nThis stores the regression model analyzing the impact of games started on players' free-throw percentages.\n\n")
 
 print(scatterplot2)
+cat("\n\n\nVisualizes the relationship between games started and free throw percentages.\n\n")
 }
 ```
